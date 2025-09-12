@@ -1,0 +1,1172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%, #f093fb 200%);
+    min-height: 100vh;
+    color: #333;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 219, 226, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* 应用标题区域 */
+.app-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 25px 20px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 50%, #ff9ff3 100%);
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 40px rgba(255, 107, 107, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.app-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 70%);
+    animation: shimmer 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.app-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.clock-icon {
+    font-size: 32px;
+    animation: clockTick 2s infinite ease-in-out;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes clockTick {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-5deg) scale(1.1); }
+    50% { transform: rotate(0deg) scale(1.2); }
+    75% { transform: rotate(5deg) scale(1.1); }
+}
+
+.app-title h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+    text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+.live-indicator {
+    background: #00ff00;
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 12px;
+    animation: livePulse 2s infinite;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    text-shadow: none;
+}
+
+@keyframes livePulse {
+    0%, 100% { 
+        background: #00ff00; 
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); 
+    }
+    50% { 
+        background: #32ff32; 
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); 
+        transform: scale(1.05);
+    }
+}
+
+.app-description {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+/* 快速时钟区域 */
+.quick-clock-section {
+    margin-bottom: 25px;
+}
+
+.quick-clock-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.quick-clock-selector {
+    display: flex;
+    justify-content: center;
+}
+
+.clock-select {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    min-width: 200px;
+    text-align: center;
+}
+
+.clock-select:hover {
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+}
+
+.clock-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.quick-clock-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    border-radius: 25px;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 
+        0 10px 40px rgba(102, 126, 234, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    animation: quickClockSlideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes quickClockSlideIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.quick-clock-display::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 70%);
+    animation: quickClockShimmer 4s infinite;
+    pointer-events: none;
+}
+
+@keyframes quickClockShimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.quick-clock-info {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+.quick-clock-city {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 4px;
+}
+
+.quick-clock-date {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.quick-clock-time {
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+    font-family: 'Courier New', monospace;
+    text-shadow: 
+        0 3px 15px rgba(0, 0, 0, 0.4),
+        0 1px 3px rgba(0, 0, 0, 0.6);
+    position: relative;
+    z-index: 1;
+    letter-spacing: 2px;
+    animation: quickTimeGlow 3s infinite ease-in-out;
+}
+
+@keyframes quickTimeGlow {
+    0%, 100% { 
+        text-shadow: 
+            0 3px 15px rgba(0, 0, 0, 0.4),
+            0 1px 3px rgba(0, 0, 0, 0.6),
+            0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    50% { 
+        text-shadow: 
+            0 3px 15px rgba(0, 0, 0, 0.4),
+            0 1px 3px rgba(0, 0, 0, 0.6),
+            0 0 30px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.quick-clock-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+}
+
+.quick-clock-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 日历头部 */
+.calendar-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-btn {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+}
+
+.nav-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+#prevMonth {
+    left: 20px;
+}
+
+#nextMonth {
+    right: 60px;
+}
+
+.add-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+    background: #5a6fd8;
+    transform: scale(1.1);
+}
+
+#currentMonth {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* 事件容器 */
+.events-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 分组标题样式 */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 0 5px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.section-count {
+    background: #667eea;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.finished-section .section-title {
+    color: #999;
+}
+
+.finished-section .section-count {
+    background: #bbb;
+}
+
+/* 事件分组容器 */
+.events-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.active-events {
+    margin-bottom: 30px;
+}
+
+.finished-events {
+    /* 已完成事件区域稍微收缩 */
+}
+
+.finished-events .event-item {
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+}
+
+/* 事件卡片 */
+.event-item {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.event-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 15px 45px rgba(0, 0, 0, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.event-item.finished {
+    background: rgba(245, 245, 245, 0.9);
+    opacity: 0.8;
+}
+
+.event-item.finished .event-title {
+    color: #999;
+    text-decoration: line-through;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.event-date {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* 倒计时容器样式 */
+.countdown-container {
+    margin-top: 15px;
+}
+
+.countdown-label {
+    font-size: 14px;
+    color: #667eea;
+    font-weight: 500;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.countdown-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    border-radius: 12px;
+    padding: 8px 12px;
+    box-shadow: 
+        0 4px 15px rgba(102, 126, 234, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 60px;
+    transition: all 0.3s ease;
+}
+
+.time-unit:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 6px 20px rgba(102, 126, 234, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.time-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.time-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 已结束事件的倒计时样式 */
+.event-item.finished .time-unit {
+    background: linear-gradient(145deg, #bbb, #999);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.event-item.finished .countdown-label {
+    color: #999;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* 弹窗样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    margin: 50px auto;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #f0f0f0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-cancel {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.btn-cancel:hover {
+    background: #e0e0e0;
+}
+
+.btn-confirm {
+    background: #667eea;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background: #5a6fd8;
+}
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.empty-state h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .calendar-header {
+        padding: 15px;
+    }
+    
+    #currentMonth {
+        font-size: 20px;
+    }
+    
+    .nav-btn, .add-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+    
+    .event-item {
+        padding: 20px;
+    }
+    
+    .modal-content {
+        margin: 20px auto;
+    }
+    
+    .countdown-display {
+        gap: 6px;
+    }
+    
+    .time-unit {
+        min-width: 50px;
+        padding: 6px 10px;
+    }
+    
+    .time-number {
+        font-size: 20px;
+    }
+    
+    .time-label {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-display {
+        gap: 4px;
+    }
+    
+    .time-unit {
+        min-width: 45px;
+        padding: 5px 8px;
+    }
+    
+    .time-number {
+        font-size: 18px;
+    }
+}
+
+/* 倒计时结束提醒弹窗样式 */
+.notification-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.notification-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    margin: 5% auto;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+    animation: notificationSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 30px;
+}
+
+@keyframes notificationSlideIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(-100px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1) translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animal-container {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 10种可爱动物样式 */
+.animal {
+    font-size: 80px;
+    animation: animalBounce 1.5s infinite ease-in-out;
+    position: relative;
+}
+
+@keyframes animalBounce {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+    }
+    25% { 
+        transform: translateY(-10px) scale(1.1) rotate(5deg); 
+    }
+    50% { 
+        transform: translateY(-15px) scale(1.2) rotate(-5deg); 
+    }
+    75% { 
+        transform: translateY(-10px) scale(1.1) rotate(5deg); 
+    }
+}
+
+.animal.cat {
+    animation: catWiggle 2s infinite ease-in-out;
+}
+
+@keyframes catWiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(5deg) scale(1.1); }
+    50% { transform: rotate(-5deg) scale(1.2); }
+    75% { transform: rotate(3deg) scale(1.1); }
+}
+
+.animal.dog {
+    animation: dogWag 1s infinite ease-in-out;
+}
+
+@keyframes dogWag {
+    0%, 100% { transform: translateX(0) scale(1); }
+    25% { transform: translateX(-5px) scale(1.05); }
+    50% { transform: translateX(5px) scale(1.1); }
+    75% { transform: translateX(-3px) scale(1.05); }
+}
+
+.animal.rabbit {
+    animation: rabbitHop 1.2s infinite ease-in-out;
+}
+
+@keyframes rabbitHop {
+    0%, 100% { transform: translateY(0) scale(1); }
+    30% { transform: translateY(-20px) scale(1.2); }
+    60% { transform: translateY(-10px) scale(1.1); }
+}
+
+.animal.bird {
+    animation: birdFly 2s infinite ease-in-out;
+}
+
+@keyframes birdFly {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    25% { transform: translateY(-8px) rotate(10deg) scale(1.1); }
+    50% { transform: translateY(-15px) rotate(-10deg) scale(1.2); }
+    75% { transform: translateY(-5px) rotate(5deg) scale(1.1); }
+}
+
+.animal.panda {
+    animation: pandaRoll 3s infinite ease-in-out;
+}
+
+@keyframes pandaRoll {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.1); }
+    50% { transform: rotate(30deg) scale(1.2); }
+    75% { transform: rotate(45deg) scale(1.1); }
+}
+
+.notification-message {
+    text-align: center;
+    color: white;
+}
+
+.notification-message h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+}
+
+.notification-message p {
+    font-size: 18px;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.notification-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.notification-btn:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* 庆祝粒子效果 */
+.celebration-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: particleFloat 3s infinite ease-in-out;
+    opacity: 0.8;
+}
+
+@keyframes particleFloat {
+    0% { 
+        transform: translateY(0) rotate(0deg); 
+        opacity: 1; 
+    }
+    50% { 
+        transform: translateY(-100px) rotate(180deg); 
+        opacity: 0.5; 
+    }
+    100% { 
+        transform: translateY(-200px) rotate(360deg); 
+        opacity: 0; 
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .app-header {
+        padding: 20px 15px;
+        margin-bottom: 25px;
+    }
+    
+    .app-title h1 {
+        font-size: 24px;
+    }
+    
+    .clock-icon {
+        font-size: 28px;
+    }
+    
+    .app-description {
+        font-size: 14px;
+    }
+    
+    .quick-clock-section {
+        margin-bottom: 20px;
+    }
+    
+    .clock-select {
+        min-width: 180px;
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+    
+    .quick-clock-display {
+        padding: 16px 20px;
+    }
+    
+    .quick-clock-city {
+        font-size: 16px;
+    }
+    
+    .quick-clock-date {
+        font-size: 13px;
+    }
+    
+    .quick-clock-time {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+    
+    .quick-clock-close {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+    
+    .calendar-header {
+        padding: 15px;
+    }
+    
+    #currentMonth {
+        font-size: 20px;
+    }
+    
+    .nav-btn, .add-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+    
+    .event-item {
+        padding: 20px;
+    }
+    
+    .modal-content {
+        margin: 20px auto;
+    }
+    
+    .countdown-display {
+        gap: 6px;
+    }
+    
+    .time-unit {
+        min-width: 50px;
+        padding: 6px 10px;
+    }
+    
+    .time-number {
+        font-size: 20px;
+    }
+    
+    .time-label {
+        font-size: 10px;
+    }
+    
+    .notification-content {
+        margin: 10% auto;
+        padding: 30px 20px;
+        min-height: 350px;
+    }
+    
+    .animal-container {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 25px;
+    }
+    
+    .animal {
+        font-size: 60px;
+    }
+    
+    .notification-message h3 {
+        font-size: 24px;
+    }
+    
+    .notification-message p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-display {
+        gap: 4px;
+    }
+    
+    .time-unit {
+        min-width: 45px;
+        padding: 5px 8px;
+    }
+    
+    .time-number {
+        font-size: 18px;
+    }
+    
+    .app-title {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .app-title h1 {
+        font-size: 20px;
+    }
+    
+    .quick-clock-container {
+        gap: 12px;
+    }
+    
+    .clock-select {
+        min-width: 160px;
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+    
+    .quick-clock-display {
+        padding: 12px 16px;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .quick-clock-info {
+        align-items: center;
+    }
+    
+    .quick-clock-city {
+        font-size: 14px;
+    }
+    
+    .quick-clock-date {
+        font-size: 12px;
+    }
+    
+    .quick-clock-time {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+    
+    .quick-clock-close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+    }
+    
+    .world-clocks-container {
+        gap: 10px;
+    }
+    
+    .world-clock-item {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .clock-time {
+        font-size: 14px;
+        min-width: 70px;
+    }
+}
