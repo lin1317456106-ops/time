@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+    <!-- 主页 - 精准时钟倒计时应用 -->
+    <url>
+        <loc>https://timecalc.store/</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 主页带语言参数 - 中文版本 -->
+    <url>
+        <loc>https://timecalc.store/?lang=zh</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- 主页带语言参数 - 英文版本 -->
+    <url>
+        <loc>https://timecalc.store/?lang=en</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- 隐私政策页面 -->
+    <url>
+        <loc>https://timecalc.store/#privacy</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- 关于我们页面 -->
+    <url>
+        <loc>https://timecalc.store/#about</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- 服务条款页面 -->
+    <url>
+        <loc>https://timecalc.store/#terms</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- 倒计时工具功能页面 -->
+    <url>
+        <loc>https://timecalc.store/#countdown</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 世界时钟功能页面 -->
+    <url>
+        <loc>https://timecalc.store/#worldclock</loc>
+        <lastmod>2025-01-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+</urlset>

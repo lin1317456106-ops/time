@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://timecalc.store/sitemap.xml
+
+# 页面索引规则
+Allow: /index.html
+Allow: /style.css
+Allow: /script.js
+Allow: /languages.js
+
+# 不索引的文件类型
+Disallow: *.log
+Disallow: /temp/
+Disallow: /cache/
+
+# 爬虫延迟 (可选)
+Crawl-delay: 1

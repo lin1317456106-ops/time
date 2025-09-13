@@ -38,6 +38,7 @@ class CountdownApp {
         this.updateCurrentMonth();
         this.renderEvents();
         this.startCountdownTimer();
+        this.initializeLanguage();
     }
 
     bindEvents() {
@@ -107,16 +108,91 @@ class CountdownApp {
         document.getElementById('quickClockClose').addEventListener('click', () => {
             this.closeQuickClock();
         });
+
+        // 语言切换相关事件
+        document.getElementById('languageBtn').addEventListener('click', () => {
+            this.toggleLanguageDropdown();
+        });
+
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                const lang = e.target.getAttribute('data-lang');
+                this.switchLanguage(lang);
+            });
+        });
+
+        // 点击其他地方关闭语言下拉菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-selector')) {
+                this.closeLanguageDropdown();
+            }
+        });
+
+        // 监听语言变更事件
+        window.addEventListener('languageChanged', () => {
+            this.updateCurrentMonth();
+            this.renderEvents();
+        });
+
+        // 页脚链接事件
+        document.getElementById('privacyLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showInfoModal('privacy');
+        });
+
+        document.getElementById('aboutLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showInfoModal('about');
+        });
+
+        document.getElementById('termsLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showInfoModal('terms');
+        });
+
+        // 模态框关闭事件
+        document.getElementById('privacyClose').addEventListener('click', () => {
+            this.hideInfoModal('privacy');
+        });
+
+        document.getElementById('aboutClose').addEventListener('click', () => {
+            this.hideInfoModal('about');
+        });
+
+        document.getElementById('termsClose').addEventListener('click', () => {
+            this.hideInfoModal('terms');
+        });
+
+        // 点击模态框背景关闭
+        document.getElementById('privacyModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('info-modal')) {
+                this.hideInfoModal('privacy');
+            }
+        });
+
+        document.getElementById('aboutModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('info-modal')) {
+                this.hideInfoModal('about');
+            }
+        });
+
+        document.getElementById('termsModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('info-modal')) {
+                this.hideInfoModal('terms');
+            }
+        });
     }
 
     updateCurrentMonth() {
-        const monthNames = [
-            '1月', '2月', '3月', '4月', '5月', '6月',
-            '7月', '8月', '9月', '10月', '11月', '12月'
-        ];
+        const monthNames = window.langManager.t('monthNames');
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
-        document.getElementById('currentMonth').textContent = `${year}年${monthNames[month]}`;
+        
+        if (window.langManager.getCurrentLanguage() === 'zh') {
+            document.getElementById('currentMonth').textContent = `${year}年${monthNames[month]}`;
+        } else {
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+        }
     }
 
     showAddEventModal() {
@@ -141,7 +217,7 @@ class CountdownApp {
         const time = document.getElementById('eventTime').value;
 
         if (!title || !date) {
-            alert('请输入事件名称和日期！');
+            alert(window.langManager.t('pleaseEnterNameAndDate'));
             return;
         }
 
@@ -161,7 +237,7 @@ class CountdownApp {
     }
 
     deleteEvent(eventId) {
-        if (confirm('确定要删除这个倒计时吗？')) {
+        if (confirm(window.langManager.t('deleteConfirm'))) {
             this.events = this.events.filter(event => event.id !== eventId);
             this.saveEvents();
             this.renderEvents();
@@ -190,8 +266,8 @@ class CountdownApp {
         if (currentMonthEvents.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
-                    <h3>暂无倒计时事件</h3>
-                    <p>点击右上角的 + 号添加新的倒计时</p>
+                    <h3>${window.langManager.t('noEvents')}</h3>
+                    <p>${window.langManager.t('noEventsDesc')}</p>
                 </div>
             `;
             return;
@@ -201,9 +277,10 @@ class CountdownApp {
 
         // 渲染进行中的事件
         if (activeEvents.length > 0) {
+            const activeTitle = window.langManager.getCurrentLanguage() === 'zh' ? '🔥 进行中的倒计时' : '🔥 Active Countdowns';
             html += `
                 <div class="section-header">
-                    <h3 class="section-title">🔥 进行中的倒计时</h3>
+                    <h3 class="section-title">${activeTitle}</h3>
                     <span class="section-count">${activeEvents.length}</span>
                 </div>
                 <div class="events-section active-events">
@@ -215,9 +292,10 @@ class CountdownApp {
 
         // 渲染已结束的事件
         if (finishedEvents.length > 0) {
+            const finishedTitle = window.langManager.getCurrentLanguage() === 'zh' ? '✅ 已完成的事件' : '✅ Completed Events';
             html += `
                 <div class="section-header finished-section">
-                    <h3 class="section-title">✅ 已完成的事件</h3>
+                    <h3 class="section-title">${finishedTitle}</h3>
                     <span class="section-count">${finishedEvents.length}</span>
                 </div>
                 <div class="events-section finished-events">
@@ -245,20 +323,20 @@ class CountdownApp {
                         ${countdownData.days > 0 ? `
                             <div class="time-unit">
                                 <span class="time-number">${String(countdownData.days).padStart(2, '0')}</span>
-                                <span class="time-label">天</span>
+                                <span class="time-label">${window.langManager.t('days')}</span>
                             </div>
                         ` : ''}
                         <div class="time-unit">
                             <span class="time-number">${String(countdownData.hours).padStart(2, '0')}</span>
-                            <span class="time-label">时</span>
+                            <span class="time-label">${window.langManager.t('hours')}</span>
                         </div>
                         <div class="time-unit">
                             <span class="time-number">${String(countdownData.minutes).padStart(2, '0')}</span>
-                            <span class="time-label">分</span>
+                            <span class="time-label">${window.langManager.t('minutes')}</span>
                         </div>
                         <div class="time-unit">
                             <span class="time-number">${String(countdownData.seconds).padStart(2, '0')}</span>
-                            <span class="time-label">秒</span>
+                            <span class="time-label">${window.langManager.t('seconds')}</span>
                         </div>
                     </div>
                 </div>
@@ -275,7 +353,7 @@ class CountdownApp {
             // 倒计时结束，停止计时，显示00:00:00
             return {
                 isFinished: true,
-                text: '已结束',
+                text: window.langManager.t('finished'),
                 days: 0,
                 hours: 0,
                 minutes: 0,
@@ -288,9 +366,11 @@ class CountdownApp {
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
+        const remainingText = window.langManager.getCurrentLanguage() === 'zh' ? '剩余时间' : 'Time Remaining';
+        
         return {
             isFinished: false,
-            text: '剩余时间',
+            text: remainingText,
             days: days,
             hours: hours,
             minutes: minutes,
@@ -526,6 +606,66 @@ class CountdownApp {
         } catch (error) {
             console.error('保存事件数据失败:', error);
             alert('保存数据失败，请检查浏览器存储设置');
+        }
+    }
+
+    // 初始化语言
+    initializeLanguage() {
+        // 设置初始语言状态
+        window.langManager.updatePageTexts();
+    }
+
+    // 切换语言下拉菜单显示/隐藏
+    toggleLanguageDropdown() {
+        const dropdown = document.getElementById('languageDropdown');
+        dropdown.classList.toggle('show');
+    }
+
+    // 关闭语言下拉菜单
+    closeLanguageDropdown() {
+        const dropdown = document.getElementById('languageDropdown');
+        dropdown.classList.remove('show');
+    }
+
+    // 切换语言
+    switchLanguage(lang) {
+        window.langManager.switchLanguage(lang);
+        this.closeLanguageDropdown();
+    }
+
+    // 显示信息模态框
+    showInfoModal(type) {
+        const modal = document.getElementById(`${type}Modal`);
+        const content = document.getElementById(`${type}Content`);
+        
+        if (modal && content) {
+            // 根据类型加载相应内容
+            const contentKey = `${type}Content`;
+            content.innerHTML = window.langManager.t(contentKey);
+            
+            // 显示模态框
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+            
+            // 添加显示动画
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+    }
+
+    // 隐藏信息模态框
+    hideInfoModal(type) {
+        const modal = document.getElementById(`${type}Modal`);
+        
+        if (modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // 恢复背景滚动
+            
+            // 等待动画完成后隐藏
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
         }
     }
 }
