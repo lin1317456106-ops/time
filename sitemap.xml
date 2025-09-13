@@ -6,7 +6,7 @@
 
     <!-- 主页 - 精准时钟倒计时应用 -->
     <url>
-        <loc>https://timecalc.store/</loc>
+        <loc>https://onecdtapp.shop/</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
@@ -14,7 +14,7 @@
 
     <!-- 主页带语言参数 - 中文版本 -->
     <url>
-        <loc>https://timecalc.store/?lang=zh</loc>
+        <loc>https://onecdtapp.shop/?lang=zh</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -22,7 +22,7 @@
 
     <!-- 主页带语言参数 - 英文版本 -->
     <url>
-        <loc>https://timecalc.store/?lang=en</loc>
+        <loc>https://onecdtapp.shop/?lang=en</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -30,7 +30,7 @@
 
     <!-- 隐私政策页面 -->
     <url>
-        <loc>https://timecalc.store/#privacy</loc>
+        <loc>https://onecdtapp.shop/#privacy</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
@@ -38,7 +38,7 @@
 
     <!-- 关于我们页面 -->
     <url>
-        <loc>https://timecalc.store/#about</loc>
+        <loc>https://onecdtapp.shop/#about</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -46,7 +46,7 @@
 
     <!-- 服务条款页面 -->
     <url>
-        <loc>https://timecalc.store/#terms</loc>
+        <loc>https://onecdtapp.shop/#terms</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
@@ -54,7 +54,7 @@
 
     <!-- 倒计时工具功能页面 -->
     <url>
-        <loc>https://timecalc.store/#countdown</loc>
+        <loc>https://onecdtapp.shop/#countdown</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -62,7 +62,7 @@
 
     <!-- 世界时钟功能页面 -->
     <url>
-        <loc>https://timecalc.store/#worldclock</loc>
+        <loc>https://onecdtapp.shop/#worldclock</loc>
         <lastmod>2025-01-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>

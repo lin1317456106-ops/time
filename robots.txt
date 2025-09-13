@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://timecalc.store/sitemap.xml
+Sitemap: https://onecdtapp.shop/sitemap.xml
 
 # 页面索引规则
 Allow: /index.html
